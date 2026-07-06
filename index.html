@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Dogs &amp; Cats — Petshop + Clínica Veterinária · Canoas/RS</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" />
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg1:#0a2933; --bg2:#0e3d49; --turq:#41EAD4; --green:#B0E298; --orange:#FF934F;
+    --text:#eaf7f4; --muted:#9fc4c9; --card:#0f3643; --line:rgba(65,234,212,.16);
+    --fd:'Fredoka','Plus Jakarta Sans',sans-serif; --fb:'Plus Jakarta Sans',system-ui,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{background:var(--bg1);color:var(--text);font-family:var(--fb);overflow-x:hidden}
+  h1,h2,h3,h4{font-family:var(--fd);letter-spacing:-.01em}
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+  #bg-grad{position:fixed;inset:0;z-index:0;background:
+      radial-gradient(1200px 700px at 75% 10%, rgba(65,234,212,.18), transparent 60%),
+      radial-gradient(900px 600px at 10% 90%, rgba(176,226,152,.10), transparent 55%),
+      linear-gradient(180deg,var(--bg1),var(--bg2));
+      transition:background 1.2s ease}
+  #scene{position:fixed;inset:0;z-index:1;pointer-events:none}
+  #scrim{position:fixed;inset:0;z-index:2;pointer-events:none;
+    background:linear-gradient(180deg, rgba(8,28,35,.62) 0%, rgba(8,28,35,.34) 30%, rgba(8,28,35,.22) 55%, rgba(8,28,35,.55) 100%)}
+  .content{position:relative;z-index:3}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 28px}
+  nav{position:fixed;top:0;left:0;right:0;z-index:6;display:flex;align-items:center;justify-content:space-between;
+      padding:16px 28px;transition:background .3s,backdrop-filter .3s}
+  nav.solid{background:rgba(10,41,51,.8);backdrop-filter:blur(12px)}
+  .logo{font-family:var(--fd);font-weight:700;font-size:23px;display:flex;align-items:center;gap:9px}
+  .logo .paw{width:32px;height:32px;display:grid;place-items:center;background:var(--turq);border-radius:50%;font-size:16px}
+  .logo b{color:var(--orange)}
+  .nav-links{display:flex;gap:24px;font-size:14px;font-weight:600;color:var(--muted)}
+  .nav-links a:hover{color:var(--turq)}
+  .nav-act{display:flex;align-items:center;gap:10px}
+  .ico{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.06);
+       border:1px solid var(--line);color:var(--turq);transition:transform .2s,color .2s}
+  .ico:hover{transform:translateY(-2px);color:var(--orange)}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:40px;font-weight:800;font-size:14px;
+       background:var(--orange);color:#0a2933;box-shadow:0 10px 30px rgba(255,147,79,.4);transition:transform .2s,box-shadow .2s}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 14px 36px rgba(255,147,79,.55)}
+  .btn-ghost{background:rgba(255,255,255,.05);color:var(--text);border:1px solid var(--line);box-shadow:none}
+  .btn-turq{background:var(--turq);color:#05282e;box-shadow:0 10px 30px rgba(65,234,212,.35)}
+  section{min-height:100vh;display:flex;align-items:center;padding:90px 0}
+  section.short{min-height:auto}
+  .hero-copy{max-width:640px}
+  .eyebrow{display:inline-flex;gap:8px;align-items:center;font-size:12px;font-weight:800;letter-spacing:.13em;
+     text-transform:uppercase;color:var(--turq);border:1px solid var(--line);background:rgba(65,234,212,.08);
+     padding:7px 15px;border-radius:40px;margin-bottom:22px}
+  h1{font-size:clamp(42px,7vw,88px);font-weight:700;line-height:1.02;color:#fff;
+     text-shadow:0 4px 20px rgba(0,0,0,.55), 0 2px 8px rgba(0,0,0,.55)}
+  .orange{color:var(--orange);text-shadow:0 4px 20px rgba(0,0,0,.45), 0 2px 8px rgba(0,0,0,.45)}
+  .sub{margin-top:22px;font-size:clamp(16px,2vw,19px);color:var(--text);max-width:520px;line-height:1.7;
+     text-shadow:0 2px 10px rgba(0,0,0,.55)}
+  #hero{padding-top:120px}
+  @media(max-width:820px){
+    #hero{align-items:flex-start;padding-top:130px}
+  }
+  .cta-row{margin-top:32px;display:flex;gap:14px;flex-wrap:wrap}
+  .line{overflow:hidden;display:block}
+  .line > span{display:block;will-change:transform}
+  h2{font-size:clamp(30px,5vw,54px);font-weight:700;line-height:1.05;color:#fff}
+  .lead{color:var(--text);font-size:18px;line-height:1.7;margin-top:16px;max-width:540px;
+     text-shadow:0 3px 14px rgba(0,0,0,.55), 0 1px 4px rgba(0,0,0,.5)}
+  .right{justify-content:flex-end;text-align:right}
+  .right .lead{margin-left:auto}
+  .sec-head{text-align:center;max-width:640px;margin:0 auto 46px}
+  .sec-head p{color:var(--text);margin-top:12px;text-shadow:0 3px 14px rgba(0,0,0,.55), 0 1px 4px rgba(0,0,0,.5)}
+  /* rails */
+  .rail{display:flex;gap:18px;overflow-x:auto;padding:6px 28px 20px;scroll-snap-type:x mandatory;scrollbar-width:none;width:100%}
+  .rail::-webkit-scrollbar{display:none}
+  /* carrossel automático infinito (Loja) */
+  .rail--auto{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
+     mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+  .rail-track{display:flex;gap:18px;width:max-content;animation:marquee 28s linear infinite}
+  .rail--auto:hover .rail-track{animation-play-state:paused}
+  @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  @media(prefers-reduced-motion:reduce){.rail-track{animation:none}.rail--auto{overflow-x:auto}}
+  .card{scroll-snap-align:start;flex:0 0 300px;height:360px;border-radius:22px;position:relative;overflow:hidden;
+        border:1px solid var(--line);background:#12303a}
+  .card img{width:100%;height:100%;object-fit:cover;opacity:.95;transition:transform .5s ease}
+  .card:hover img{transform:scale(1.06)}
+  .card .cap{position:absolute;left:16px;bottom:16px;right:16px}
+  .card .cap b{font-size:20px;font-weight:800}
+  .card .cap p{font-size:13px;color:#cfeee9;opacity:.9}
+  .card .price{position:absolute;top:14px;right:14px;background:var(--turq);color:#05282e;font-weight:800;font-size:12px;padding:6px 12px;border-radius:40px}
+  /* produto card menor */
+  .prod{flex:0 0 240px;height:auto}
+  .prod .pimg{height:200px;overflow:hidden}
+  .prod .pb{padding:16px}
+  .prod .pcat{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--turq)}
+  .prod h4{font-family:var(--fb);font-size:15px;margin:4px 0 12px;color:#fff}
+  .prow{display:flex;align-items:center;justify-content:space-between}
+  .pprice{font-family:var(--fd);font-weight:700;color:var(--turq);font-size:19px}
+  .pbuy{background:var(--green);color:#0e3d49;font-weight:800;font-size:12px;padding:8px 14px;border-radius:30px}
+  /* grids */
+  .grid{display:grid;gap:22px;width:100%}
+  .g4{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+  .g3{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+  .tile{background:var(--card);border:1px solid var(--line);border-radius:22px;overflow:hidden;transition:transform .3s,border-color .3s}
+  .tile:hover{transform:translateY(-6px);border-color:rgba(65,234,212,.5)}
+  .tile .timg{height:230px;overflow:hidden}
+  .tile .timg img{width:100%;height:100%;object-fit:cover}
+  .tile .tb{padding:20px}
+  .tile h4{font-family:var(--fb);font-size:18px;color:#fff}
+  .role{color:var(--orange);font-size:13px;font-weight:700}
+  .tile p{color:var(--muted);font-size:14px;margin-top:8px}
+  /* planos */
+  .plan{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:30px;text-align:center}
+  .plan.pop{border:2px solid var(--turq)}
+  .ptag{display:inline-block;background:var(--orange);color:#0a2933;font-size:11px;font-weight:800;padding:5px 14px;border-radius:30px;margin-bottom:12px}
+  .plan h3{font-size:24px;color:#fff}
+  .pval{font-family:var(--fd);font-size:42px;color:var(--turq);margin:8px 0}
+  .pval small{font-size:15px;color:var(--muted);font-family:var(--fb)}
+  .plan ul{list-style:none;text-align:left;margin:16px 0 22px}
+  .plan li{padding:8px 0;color:var(--muted);font-size:14px;border-bottom:1px solid var(--line)}
+  /* serviços icon cards */
+  .svc{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:26px;transition:transform .3s,border-color .3s}
+  .svc:hover{transform:translateY(-6px);border-color:rgba(65,234,212,.5)}
+  .svc .si{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;font-size:26px;background:rgba(65,234,212,.14);margin-bottom:14px}
+  .svc h4{font-family:var(--fb);font-size:19px;color:#fff}
+  .svc p{color:var(--muted);font-size:14px;margin:8px 0 14px}
+  .svc .sf{display:flex;align-items:center;justify-content:space-between}
+  .svc .sp{color:var(--orange);font-weight:700;font-family:var(--fd)}
+  .svc .sl{color:var(--turq);font-weight:800;font-size:13px}
+  .stats{display:flex;gap:40px;flex-wrap:wrap;margin-top:30px}
+  .stat b{display:block;font-family:var(--fd);font-size:40px;color:var(--turq)}
+  .stat span{font-size:13px;color:var(--text);text-shadow:0 2px 10px rgba(0,0,0,.55)}
+  .final{flex-direction:column;text-align:center;gap:22px;justify-content:center}
+  .final h2{font-size:clamp(34px,6vw,68px)}
+  footer{background:rgba(0,0,0,.2);border-top:1px solid var(--line);padding:56px 0 28px;position:relative;z-index:3}
+  .fgrid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:34px}
+  .fgrid h5{font-family:var(--fb);color:#fff;font-weight:800;margin-bottom:12px;font-size:15px}
+  .fgrid li{list-style:none;margin-bottom:8px;color:var(--muted);font-size:14px}
+  .fgrid a:hover{color:#fff}
+  .fsoc{display:flex;gap:12px;margin-top:16px}
+  .fbot{border-top:1px solid var(--line);margin-top:36px;padding-top:18px;text-align:center;color:var(--muted);font-size:13px;opacity:.8}
+  .hint{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:5;font-size:12px;color:var(--text);
+        text-shadow:0 2px 10px rgba(0,0,0,.55);letter-spacing:.1em;text-transform:uppercase;animation:bob 1.8s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,7px)}}
+  .loader{position:fixed;inset:0;z-index:20;background:var(--bg1);display:grid;place-items:center;font-weight:800;letter-spacing:.2em;color:var(--turq);transition:opacity .6s}
+  @media(max-width:820px){.nav-links{display:none}.right{justify-content:flex-start;text-align:left}.fgrid{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div id="bg-grad"></div>
+<canvas id="scene"></canvas>
+<div id="scrim"></div>
+<div class="loader" id="loader">CARREGANDO 3D…</div>
+
+<nav id="nav">
+  <div class="logo"><span class="paw">🐾</span>Dogs <b>&amp;</b> Cats</div>
+  <div class="nav-links">
+    <a href="#servicos">Serviços</a><a href="#loja">Loja</a><a href="#equipe">Equipe</a><a href="#planos">Planos</a><a href="#blog">Blog</a>
+  </div>
+  <div class="nav-act">
+    <a class="ico" href="https://instagram.com" target="_blank" aria-label="Instagram"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63a5.9 5.9 0 0 0-2.12 1.38A5.9 5.9 0 0 0 .63 4.14C.33 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.3.79.72 1.46 1.38 2.12.66.66 1.33 1.08 2.12 1.38.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56a6.15 6.15 0 0 0 3.5-3.5c.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91a6.15 6.15 0 0 0-3.5-3.5c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0m0 5.84A6.16 6.16 0 1 0 18.16 12 6.16 6.16 0 0 0 12 5.84m0 10.16A4 4 0 1 1 16 12a4 4 0 0 1-4 4m6.41-10.4a1.44 1.44 0 1 0 1.44 1.44 1.44 1.44 0 0 0-1.44-1.44"/></svg></a>
+    <a class="ico" href="https://wa.me/5511123456789" target="_blank" aria-label="WhatsApp"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15s-.77.96-.94 1.16c-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.44-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37s-1.04 1.01-1.04 2.48 1.07 2.87 1.22 3.07c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35M12.05 21.8h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.9-9.88 2.64 0 5.12 1.03 6.99 2.9a9.82 9.82 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.89 9.88M20.46 3.5A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.9c0 2.1.55 4.14 1.6 5.95L.06 24l6.3-1.65a11.9 11.9 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.9-11.9a11.82 11.82 0 0 0-3.48-8.4"/></svg></a>
+    <a class="btn" href="https://wa.me/5511123456789?text=Ola!%20Quero%20agendar%20um%20horario" target="_blank">Agendar</a>
+  </div>
+</nav>
+
+<div class="content">
+  <!-- HERO -->
+  <section class="wrap" id="hero">
+    <div class="hero-copy">
+      <span class="eyebrow">🐾 Petshop + Clínica Veterinária · Canoas/RS</span>
+      <h1 data-reveal>
+        <span class="line"><span>Amor de verdade por</span></span>
+        <span class="line"><span><b class="orange">cães</b> e <b class="orange">gatos</b>.</span></span>
+      </h1>
+      <p class="sub" data-reveal-fade>Banho, tosa, consultas, vacinas e loja completa num só lugar — com uma equipe que cuida do seu melhor amigo como família. Role a página. 🐕</p>
+      <div class="cta-row">
+        <a class="btn" href="https://wa.me/5511123456789?text=Ola!%20Quero%20agendar" target="_blank">Agendar no WhatsApp</a>
+        <a class="btn btn-ghost" href="#servicos">Ver serviços</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MANIFESTO -->
+  <section class="wrap right">
+    <div>
+      <h2 data-reveal>
+        <span class="line"><span>Cuidado de verdade,</span></span>
+        <span class="line"><span>do focinho ao rabo.</span></span>
+      </h2>
+      <p class="lead" data-reveal-fade>Profissionais apaixonados, ambiente tranquilo e produtos premium. Seu pet sai mais feliz — e você, mais tranquilo.</p>
+    </div>
+  </section>
+
+  <!-- SERVIÇOS -->
+  <section id="servicos" class="wrap short" style="flex-direction:column;align-items:stretch">
+    <div class="sec-head"><span class="eyebrow">Nossos serviços</span><h2 data-reveal><span class="line"><span>Tudo que ele precisa</span></span></h2><p>Do banho à emergência 24h — cuidado completo.</p></div>
+    <div class="grid g3">
+      <div class="svc"><div class="si">🛁</div><h4>Banho &amp; Tosa</h4><p>Higiene completa, hidratação e perfuminho.</p><div class="sf"><span class="sp">a partir de R$ 60</span><a class="sl" href="https://wa.me/5511123456789?text=Ola!%20Quero%20Banho%20e%20Tosa" target="_blank">Agendar →</a></div></div>
+      <div class="svc"><div class="si">🩺</div><h4>Consulta Veterinária</h4><p>Check-up, diagnóstico e acompanhamento.</p><div class="sf"><span class="sp">a partir de R$ 90</span><a class="sl" href="https://wa.me/5511123456789?text=Ola!%20Quero%20uma%20consulta" target="_blank">Agendar →</a></div></div>
+      <div class="svc"><div class="si">💉</div><h4>Vacinas</h4><p>Carteirinha sempre em dia: V8, V10, antirrábica.</p><div class="sf"><span class="sp">a partir de R$ 45</span><a class="sl" href="https://wa.me/5511123456789?text=Ola!%20Quero%20vacinar%20meu%20pet" target="_blank">Agendar →</a></div></div>
+      <div class="svc"><div class="si">🦷</div><h4>Odontologia Pet</h4><p>Limpeza de tártaro e saúde bucal.</p><div class="sf"><span class="sp">sob consulta</span><a class="sl" href="https://wa.me/5511123456789?text=Ola!%20Quero%20odontologia" target="_blank">Agendar →</a></div></div>
+      <div class="svc"><div class="si">✂️</div><h4>Tosa Higiênica</h4><p>Focinho, patinhas e áreas íntimas.</p><div class="sf"><span class="sp">a partir de R$ 35</span><a class="sl" href="https://wa.me/5511123456789?text=Ola!%20Quero%20tosa%20higienica" target="_blank">Agendar →</a></div></div>
+      <div class="svc"><div class="si">🚨</div><h4>Emergência 24h</h4><p>Plantão veterinário quando não pode esperar.</p><div class="sf"><span class="sp">24 horas</span><a class="sl" href="https://wa.me/5511123456789?text=EMERGENCIA!%20Preciso%20de%20atendimento" target="_blank">Chamar →</a></div></div>
+    </div>
+  </section>
+
+  <!-- LOJA -->
+  <section id="loja" class="short" style="flex-direction:column;align-items:stretch">
+    <div class="wrap"><div class="sec-head"><span class="eyebrow">Loja</span><h2 data-reveal><span class="line"><span>Rações, brinquedos &amp; mais</span></span></h2><p>Escolheu? É só pedir no WhatsApp que a gente separa. 🛒</p></div></div>
+    <div class="rail rail--auto">
+      <div class="rail-track">
+        <div class="card prod"><div class="pimg"><img src="https://images.unsplash.com/photo-1589924691995-400dc9ecc119?w=500&q=70" alt=""></div><div class="pb"><div class="pcat">Ração</div><h4>Ração Premium Cães 15kg</h4><div class="prow"><span class="pprice">R$ 189</span><a class="pbuy" href="https://wa.me/5511123456789?text=Quero%20a%20Racao%20Premium%20Caes%2015kg" target="_blank">Pedir</a></div></div></div>
+        <div class="card prod"><div class="pimg"><img src="https://images.unsplash.com/photo-1576201836106-db1758fd1c97?w=500&q=70" alt=""></div><div class="pb"><div class="pcat">Brinquedo</div><h4>Kit Brinquedos Mordedor</h4><div class="prow"><span class="pprice">R$ 49</span><a class="pbuy" href="https://wa.me/5511123456789?text=Quero%20o%20Kit%20Brinquedos" target="_blank">Pedir</a></div></div></div>
+        <div class="card prod"><div class="pimg"><img src="https://images.unsplash.com/photo-1516750105099-4b8a83e217ee?w=500&q=70" alt=""></div><div class="pb"><div class="pcat">Gatos</div><h4>Areia Higiênica 4kg</h4><div class="prow"><span class="pprice">R$ 29</span><a class="pbuy" href="https://wa.me/5511123456789?text=Quero%20Areia%20Higienica%204kg" target="_blank">Pedir</a></div></div></div>
+        <div class="card prod"><div class="pimg"><img src="https://images.unsplash.com/photo-1601758124510-52d02ddb7cbd?w=500&q=70" alt=""></div><div class="pb"><div class="pcat">Acessório</div><h4>Coleira + Guia Ajustável</h4><div class="prow"><span class="pprice">R$ 59</span><a class="pbuy" href="https://wa.me/5511123456789?text=Quero%20a%20Coleira%20e%20Guia" target="_blank">Pedir</a></div></div></div>
+        <div class="card prod"><div class="pimg"><img src="https://images.unsplash.com/photo-1591946614720-90a587da4a36?w=500&q=70" alt=""></div><div class="pb"><div class="pcat">Higiene</div><h4>Shampoo Neutro 500ml</h4><div class="prow"><span class="pprice">R$ 34</span><a class="pbuy" href="https://wa.me/5511123456789?text=Quero%20o%20Shampoo%20Neutro" target="_blank">Pedir</a></div></div></div>
+        <div class="card prod"><div class="pimg"><img src="https://images.unsplash.com/photo-1607923432780-7a9c30adcb72?w=500&q=70" alt=""></div><div class="pb"><div class="pcat">Farmácia</div><h4>Antipulgas &amp; Carrapatos</h4><div class="prow"><span class="pprice">R$ 72</span><a class="pbuy" href="https://wa.me/5511123456789?text=Quero%20o%20Antipulgas" target="_blank">Pedir</a></div></div></div>
+        <!-- duplicata p/ loop infinito sem emenda -->
+        <div class="card prod" aria-hidden="true"><div class="pimg"><img src="https://images.unsplash.com/photo-1589924691995-400dc9ecc119?w=500&q=70" alt=""></div><div class="pb"><div class="pcat">Ração</div><h4>Ração Premium Cães 15kg</h4><div class="prow"><span class="pprice">R$ 189</span><a class="pbuy" href="https://wa.me/5511123456789?text=Quero%20a%20Racao%20Premium%20Caes%2015kg" target="_blank" tabindex="-1">Pedir</a></div></div></div>
+        <div class="card prod" aria-hidden="true"><div class="pimg"><img src="https://images.unsplash.com/photo-1576201836106-db1758fd1c97?w=500&q=70" alt=""></div><div class="pb"><div class="pcat">Brinquedo</div><h4>Kit Brinquedos Mordedor</h4><div class="prow"><span class="pprice">R$ 49</span><a class="pbuy" href="https://wa.me/5511123456789?text=Quero%20o%20Kit%20Brinquedos" target="_blank" tabindex="-1">Pedir</a></div></div></div>
+        <div class="card prod" aria-hidden="true"><div class="pimg"><img src="https://images.unsplash.com/photo-1516750105099-4b8a83e217ee?w=500&q=70" alt=""></div><div class="pb"><div class="pcat">Gatos</div><h4>Areia Higiênica 4kg</h4><div class="prow"><span class="pprice">R$ 29</span><a class="pbuy" href="https://wa.me/5511123456789?text=Quero%20Areia%20Higienica%204kg" target="_blank" tabindex="-1">Pedir</a></div></div></div>
+        <div class="card prod" aria-hidden="true"><div class="pimg"><img src="https://images.unsplash.com/photo-1601758124510-52d02ddb7cbd?w=500&q=70" alt=""></div><div class="pb"><div class="pcat">Acessório</div><h4>Coleira + Guia Ajustável</h4><div class="prow"><span class="pprice">R$ 59</span><a class="pbuy" href="https://wa.me/5511123456789?text=Quero%20a%20Coleira%20e%20Guia" target="_blank" tabindex="-1">Pedir</a></div></div></div>
+        <div class="card prod" aria-hidden="true"><div class="pimg"><img src="https://images.unsplash.com/photo-1591946614720-90a587da4a36?w=500&q=70" alt=""></div><div class="pb"><div class="pcat">Higiene</div><h4>Shampoo Neutro 500ml</h4><div class="prow"><span class="pprice">R$ 34</span><a class="pbuy" href="https://wa.me/5511123456789?text=Quero%20o%20Shampoo%20Neutro" target="_blank" tabindex="-1">Pedir</a></div></div></div>
+        <div class="card prod" aria-hidden="true"><div class="pimg"><img src="https://images.unsplash.com/photo-1607923432780-7a9c30adcb72?w=500&q=70" alt=""></div><div class="pb"><div class="pcat">Farmácia</div><h4>Antipulgas &amp; Carrapatos</h4><div class="prow"><span class="pprice">R$ 72</span><a class="pbuy" href="https://wa.me/5511123456789?text=Quero%20o%20Antipulgas" target="_blank" tabindex="-1">Pedir</a></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EQUIPE -->
+  <section id="equipe" class="wrap short" style="flex-direction:column;align-items:stretch">
+    <div class="sec-head"><span class="eyebrow">Quem cuida</span><h2 data-reveal><span class="line"><span>Nossa equipe</span></span></h2><p>Profissionais apaixonados por animais — e muito bem preparados.</p></div>
+    <div class="grid g4">
+      <div class="tile"><div class="timg"><img src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=500&q=70" alt=""></div><div class="tb"><h4>Dra. Marina Alves</h4><div class="role">Veterinária Clínica</div><p>Especialista em felinos e medicina preventiva.</p></div></div>
+      <div class="tile"><div class="timg"><img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=500&q=70" alt=""></div><div class="tb"><h4>Dr. Rafael Nunes</h4><div class="role">Cirurgião Veterinário</div><p>Ortopedia e tecidos moles. 12 anos de bancada.</p></div></div>
+      <div class="tile"><div class="timg"><img src="https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?w=500&q=70" alt=""></div><div class="tb"><h4>Camila Souza</h4><div class="role">Groomer Sênior</div><p>Banho &amp; tosa premium com muito carinho.</p></div></div>
+      <div class="tile"><div class="timg"><img src="https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=500&q=70" alt=""></div><div class="tb"><h4>Bruno Lima</h4><div class="role">Auxiliar Veterinário</div><p>Cuida do bem-estar dos pets internados.</p></div></div>
+    </div>
+  </section>
+
+  <!-- PLANOS -->
+  <section id="planos" class="wrap short" style="flex-direction:column;align-items:stretch">
+    <div class="sec-head"><span class="eyebrow">Planos &amp; Assinatura</span><h2 data-reveal><span class="line"><span>Saúde em dia, sem sustos</span></span></h2><p>Cuidado contínuo por uma mensalidade que cabe no bolso.</p></div>
+    <div class="grid g3">
+      <div class="plan"><h3>Filhote</h3><div class="pval">R$ 59<small>/mês</small></div><ul><li>✓ 1 consulta/mês</li><li>✓ Vacinas do 1º ano</li><li>✓ Vermífugo</li><li>✓ 10% de desconto na loja</li></ul><a class="btn btn-ghost" style="width:100%;justify-content:center" href="https://wa.me/5511123456789?text=Quero%20o%20plano%20Filhote" target="_blank">Assinar</a></div>
+      <div class="plan pop"><span class="ptag">Mais escolhido</span><h3>Completo</h3><div class="pval">R$ 99<small>/mês</small></div><ul><li>✓ Consultas ilimitadas</li><li>✓ Vacinas anuais</li><li>✓ 1 banho/mês</li><li>✓ 20% de desconto na loja</li><li>✓ Emergência 24h</li></ul><a class="btn" style="width:100%;justify-content:center" href="https://wa.me/5511123456789?text=Quero%20o%20plano%20Completo" target="_blank">Assinar</a></div>
+      <div class="plan"><h3>Sênior</h3><div class="pval">R$ 129<small>/mês</small></div><ul><li>✓ Consultas ilimitadas</li><li>✓ Exames semestrais</li><li>✓ Odontologia inclusa</li><li>✓ 25% de desconto na loja</li><li>✓ Leva e traz</li></ul><a class="btn btn-ghost" style="width:100%;justify-content:center" href="https://wa.me/5511123456789?text=Quero%20o%20plano%20Senior" target="_blank">Assinar</a></div>
+    </div>
+  </section>
+
+  <!-- BLOG -->
+  <section id="blog" class="wrap short" style="flex-direction:column;align-items:stretch">
+    <div class="sec-head"><span class="eyebrow">Blog &amp; Dicas</span><h2 data-reveal><span class="line"><span>Conteúdo pra cuidar melhor</span></span></h2></div>
+    <div class="grid g3">
+      <div class="tile"><div class="timg"><img src="https://images.unsplash.com/photo-1552053831-71594a27632d?w=600&q=70" alt=""></div><div class="tb"><div class="role" style="color:var(--turq)">Saúde</div><h4>Quando vacinar meu filhote?</h4><p>O calendário de vacinas do 1º ano, explicado simples.</p></div></div>
+      <div class="tile"><div class="timg"><img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=600&q=70" alt=""></div><div class="tb"><div class="role" style="color:var(--turq)">Comportamento</div><h4>Por que meu gato ignora a areia?</h4><p>5 motivos comuns e como resolver sem estresse.</p></div></div>
+      <div class="tile"><div class="timg"><img src="https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=600&q=70" alt=""></div><div class="tb"><div class="role" style="color:var(--turq)">Nutrição</div><h4>Ração seca x úmida: qual escolher?</h4><p>Prós e contras para cada fase da vida do pet.</p></div></div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="wrap">
+    <div>
+      <h2 data-reveal><span class="line"><span>Confiança que se</span></span><span class="line"><span class="orange">mede em rabos abanando.</span></span></h2>
+      <div class="stats"><div class="stat"><b>12k+</b><span>Pets atendidos</span></div><div class="stat"><b>4.9★</b><span>Avaliação Google</span></div><div class="stat"><b>10</b><span>Anos cuidando</span></div><div class="stat"><b>24h</b><span>Emergência</span></div></div>
+    </div>
+  </section>
+
+  <!-- FINAL -->
+  <section class="wrap final">
+    <h2 data-reveal><span class="line"><span>Onde amor por animais</span></span><span class="line"><span class="orange">vira cuidado de verdade.</span></span></h2>
+    <a class="btn" style="font-size:16px;padding:15px 32px" href="https://wa.me/5511123456789?text=Ola!%20Quero%20agendar%20🐾" target="_blank">Agendar agora 🐾</a>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div>
+        <div class="logo"><span class="paw" style="background:var(--orange)">🐾</span>Dogs <b>&amp;</b> Cats</div>
+        <p style="color:var(--muted);margin-top:14px;max-width:320px;font-size:14px">Petshop e clínica veterinária em Canoas/RS. Cuidado de verdade para cães e gatos.</p>
+        <div class="fsoc">
+          <a class="ico" href="https://instagram.com" target="_blank" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63a5.9 5.9 0 0 0-2.12 1.38A5.9 5.9 0 0 0 .63 4.14C.33 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.3.79.72 1.46 1.38 2.12.66.66 1.33 1.08 2.12 1.38.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56a6.15 6.15 0 0 0 3.5-3.5c.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91a6.15 6.15 0 0 0-3.5-3.5c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0m0 5.84A6.16 6.16 0 1 0 18.16 12 6.16 6.16 0 0 0 12 5.84m0 10.16A4 4 0 1 1 16 12a4 4 0 0 1-4 4"/></svg></a>
+          <a class="ico" href="https://wa.me/5511123456789" target="_blank" aria-label="WhatsApp"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15s-.77.96-.94 1.16c-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.44-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37s-1.04 1.01-1.04 2.48 1.07 2.87 1.22 3.07c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35M12.05 21.8h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.9-9.88 2.64 0 5.12 1.03 6.99 2.9a9.82 9.82 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.89 9.88M20.46 3.5A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.9c0 2.1.55 4.14 1.6 5.95L.06 24l6.3-1.65a11.9 11.9 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.9-11.9a11.82 11.82 0 0 0-3.48-8.4"/></svg></a>
+        </div>
+      </div>
+      <div><h5>Navegação</h5><ul><li><a href="#servicos">Serviços</a></li><li><a href="#loja">Loja</a></li><li><a href="#equipe">Equipe</a></li><li><a href="#planos">Planos</a></li><li><a href="#blog">Blog</a></li></ul></div>
+      <div><h5>Contato</h5><ul><li>Canoas / RS</li><li>(11) 1234-5678</li><li>Seg a Sex · 9h–18h</li><li>Sábado · 9h–13h</li></ul></div>
+    </div>
+    <div class="fbot">© <span id="yr"></span> Dogs &amp; Cats · Projeto fictício de portfólio · Creativ AI</div>
+  </div>
+</footer>
+
+<div class="hint">role para explorar ↓</div>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger);
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+const lenis = new Lenis({ smoothWheel:true, lerp:0.09 });
+lenis.on('scroll', ScrollTrigger.update);
+gsap.ticker.add((t)=>lenis.raf(t*1000));
+gsap.ticker.lagSmoothing(0);
+const nav = document.getElementById('nav');
+lenis.on('scroll', ({scroll})=> nav.classList.toggle('solid', scroll>40));
+addEventListener('scroll', ()=> nav.classList.toggle('solid', window.scrollY>40), {passive:true});
+
+/* ---------- Hero: sequência de quadros de vídeo real, dirigida pelo scroll ---------- */
+const canvas = document.getElementById('scene');
+const ctx = canvas.getContext('2d');
+const isMobile = innerWidth < 900;
+const SET = isMobile
+  ? { dir:'/frames/cat/', count:83 }
+  : { dir:'/frames/dog/', count:93 };
+
+function pad(n){ return String(n).padStart(3,'0'); }
+const frames = [];
+let loadedCount = 0;
+let currentFrame = 0;
+
+function drawFrame(i){
+  const img = frames[i];
+  if(!img || !img.complete || !img.naturalWidth) return;
+  const cw=canvas.width, ch=canvas.height;
+  const ir = img.naturalWidth/img.naturalHeight, cr = cw/ch;
+  let sw,sh,sx,sy;
+  if(ir > cr){ sh=img.naturalHeight; sw=sh*cr; sx=(img.naturalWidth-sw)/2; sy=0; }
+  else { sw=img.naturalWidth; sh=sw/cr; sx=0; sy=(img.naturalHeight-sh)/2; }
+  ctx.clearRect(0,0,cw,ch);
+  ctx.drawImage(img, sx,sy,sw,sh, 0,0,cw,ch);
+}
+
+function resizeCanvas(){
+  const dpr = Math.min(devicePixelRatio,2);
+  canvas.width = innerWidth*dpr; canvas.height = innerHeight*dpr;
+  canvas.style.width = innerWidth+'px'; canvas.style.height = innerHeight+'px';
+  drawFrame(currentFrame);
+}
+
+function ready(){
+  const l=document.getElementById('loader'); if(l){l.style.opacity='0'; setTimeout(()=>l.remove(),600);}
+  intro();
+}
+
+for(let i=1;i<=SET.count;i++){
+  const img = new Image();
+  img.onload = ()=>{ loadedCount++; if(i===1) resizeCanvas(); if(loadedCount===SET.count) ready(); };
+  img.src = SET.dir+'f_'+pad(i)+'.jpg';
+  frames.push(img);
+}
+
+ScrollTrigger.create({
+  trigger:'body', start:'top top', end:'bottom bottom', scrub:true,
+  onUpdate:(self)=>{
+    currentFrame = Math.min(SET.count-1, Math.round(self.progress*(SET.count-1)));
+    drawFrame(currentFrame);
+  }
+});
+
+addEventListener('resize', resizeCanvas);
+resizeCanvas();
+addEventListener('load', resizeCanvas);
+setTimeout(resizeCanvas, 300);
+setTimeout(resizeCanvas, 1000);
+
+function intro(){
+  gsap.to('.line > span',{y:0,duration:1,stagger:0.08,ease:'expo.out',delay:0.1});
+  document.querySelectorAll('[data-reveal-fade]').forEach(el=>gsap.fromTo(el,{y:20,opacity:0},{y:0,opacity:1,duration:1,delay:0.5,ease:'power3.out'}));
+}
+gsap.set('.line > span',{y:'110%'});
+document.querySelectorAll('section [data-reveal]').forEach(h=>gsap.to(h.querySelectorAll('.line > span'),{y:0,duration:1,stagger:0.09,ease:'expo.out',scrollTrigger:{trigger:h,start:'top 82%'}}));
+gsap.utils.toArray('.svc,.tile,.plan,.card').forEach((el,i)=>gsap.fromTo(el,{y:26,opacity:0},{y:0,opacity:1,duration:.7,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 90%'}}));
+</script>
+</body>
+</html>
